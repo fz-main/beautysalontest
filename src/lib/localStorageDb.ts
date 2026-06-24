@@ -1,4 +1,4 @@
-const STORAGE_KEY = 'bibenglow_bookings_v2';
+const STORAGE_KEY = 'bibenglow_bookings_new';
 
 export function fetchAllBookings() {
   try {
