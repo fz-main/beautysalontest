@@ -1,11 +1,4 @@
-const STORAGE_KEY = (() => {
-  const path = window.location.pathname;
-  if (path.includes('/beautysalontest')) {
-    return 'bibenglow_bookings_v2';
-  } else {
-    return 'bibenglow_bookings';
-  }
-})();
+const STORAGE_KEY = 'bibenglow_bookings_v2';
 
 export function fetchAllBookings() {
   try {
@@ -21,7 +14,7 @@ export function createBooking(booking: any) {
   const newBooking = { id, ...booking, status: booking.status || 'pending', created_at: new Date().toISOString() };
   bookings.push(newBooking);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings));
-  console.log('✅ СОХРАНЕНО В КЛЮЧ:', STORAGE_KEY, newBooking);
+  console.log('✅ СОХРАНЕНО В КЛЮЧ:', STORAGE_KEY);
   return newBooking;
 }
 
