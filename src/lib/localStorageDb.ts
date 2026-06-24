@@ -1,10 +1,11 @@
-// ДИНАМИЧЕСКИЙ КЛЮЧ В ЗАВИСИМОСТИ ОТ ПУТИ
+// Определяем ключ по полному пути (включая имя репозитория)
 function getStorageKey() {
   const path = window.location.pathname;
   if (path.includes('/beautysalontest')) {
     return 'beautysalontest_bookings';
   } else {
-    return 'bibenglow_bookings';
+    // Для любого другого сайта (включая старый) используем отдельный ключ
+    return 'default_bookings';
   }
 }
 

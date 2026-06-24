@@ -3,15 +3,16 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
 
-// Удаляем все возможные старые ключи
-const keysToRemove = [
+// Удаляем все возможные ключи, чтобы старые записи не мешали
+const allKeys = [
   'bibenglow_bookings',
   'bibenglow_bookings_v2',
-  'bibenglow_bookings_new',
   'beautysalontest_bookings',
-  'beautysalontest_unique'
+  'default_bookings'
 ];
-keysToRemove.forEach(key => localStorage.removeItem(key));
+allKeys.forEach(key => localStorage.removeItem(key));
+
+console.log('🧹 Все старые ключи удалены при загрузке нового сайта');
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
