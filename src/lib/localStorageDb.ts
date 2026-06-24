@@ -1,5 +1,4 @@
-// УНИКАЛЬНЫЙ КЛЮЧ ДЛЯ НОВОГО САЙТА
-const STORAGE_KEY = 'beautysalontest_bookings';
+const STORAGE_KEY = 'beautysalontest_unique';
 
 export function fetchAllBookings() {
   try {
