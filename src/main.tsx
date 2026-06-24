@@ -4,11 +4,14 @@ import App from './App';
 import './index.css';
 
 // Удаляем все возможные старые ключи
-localStorage.removeItem('bibenglow_bookings');
-localStorage.removeItem('bibenglow_bookings_v2');
-localStorage.removeItem('bibenglow_bookings_new');
-localStorage.removeItem('beautysalontest_bookings');
-localStorage.removeItem('beautysalontest_unique');
+const keysToRemove = [
+  'bibenglow_bookings',
+  'bibenglow_bookings_v2',
+  'bibenglow_bookings_new',
+  'beautysalontest_bookings',
+  'beautysalontest_unique'
+];
+keysToRemove.forEach(key => localStorage.removeItem(key));
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

@@ -1,36 +1,48 @@
-const STORAGE_KEY = 'beautysalontest_unique';
+// ДИНАМИЧЕСКИЙ КЛЮЧ В ЗАВИСИМОСТИ ОТ ПУТИ
+function getStorageKey() {
+  const path = window.location.pathname;
+  if (path.includes('/beautysalontest')) {
+    return 'beautysalontest_bookings';
+  } else {
+    return 'bibenglow_bookings';
+  }
+}
 
 export function fetchAllBookings() {
   try {
-    const data = localStorage.getItem(STORAGE_KEY);
+    const key = getStorageKey();
+    const data = localStorage.getItem(key);
     if (!data) return [];
     return JSON.parse(data);
   } catch { return []; }
 }
 
 export function createBooking(booking: any) {
+  const key = getStorageKey();
   const bookings = fetchAllBookings();
   const id = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
   const newBooking = { id, ...booking, status: booking.status || 'pending', created_at: new Date().toISOString() };
   bookings.push(newBooking);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings));
-  console.log('🔑 СОХРАНЕНО В КЛЮЧ:', STORAGE_KEY);
+  localStorage.setItem(key, JSON.stringify(bookings));
+  console.log('🔑 СОХРАНЕНО В КЛЮЧ:', key);
   return newBooking;
 }
 
 export function updateBookingStatus(id: string, status: string) {
+  const key = getStorageKey();
   const bookings = fetchAllBookings();
   const booking = bookings.find((b: any) => b.id === id);
   if (booking) {
     booking.status = status;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings));
+    localStorage.setItem(key, JSON.stringify(bookings));
   }
 }
 
 export function deleteBooking(id: string) {
+  const key = getStorageKey();
   const bookings = fetchAllBookings();
   const updated = bookings.filter((b: any) => b.id !== id);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+  localStorage.setItem(key, JSON.stringify(updated));
 }
 
 export function checkSlotAvailability(date: string, start_time: string, end_time: string) {
