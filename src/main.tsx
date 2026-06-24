@@ -3,16 +3,19 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
 
-// Удаляем все возможные ключи, чтобы старые записи не мешали
+// Удаляем все возможные старые ключи
 const allKeys = [
   'bibenglow_bookings',
   'bibenglow_bookings_v2',
+  'bibenglow_bookings_new',
   'beautysalontest_bookings',
-  'default_bookings'
+  'beautysalontest_unique',
+  'beautysalontest_v3',
+  'beautysalontest_final_separate'
 ];
 allKeys.forEach(key => localStorage.removeItem(key));
 
-console.log('🧹 Все старые ключи удалены при загрузке нового сайта');
+console.log('✅ ВСЕ СТАРЫЕ КЛЮЧИ УДАЛЕНЫ');
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
