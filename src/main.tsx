@@ -1,3 +1,4 @@
+localStorage.removeItem("beautysalontest_final_separate");
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
@@ -11,7 +12,6 @@ const oldKeys = [
   'beautysalontest_v3',
   'beautysalontest_prod_2025'
 ];
-oldKeys.forEach(key => localStorage.removeItem(key));
 
 console.log('🧹 СТАРЫЕ КЛЮЧИ УДАЛЕНЫ');
 
