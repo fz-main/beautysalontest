@@ -1,44 +1,50 @@
-import type { Booking, BookingInsert, BookingStatus } from '../types/booking';
+const STORAGE_KEY = (() => {
+  const path = window.location.pathname;
+  if (path.includes('/beautysalontest')) {
+    return 'bibenglow_bookings_v2';
+  } else {
+    return 'bibenglow_bookings';
+  }
+})();
 
-const STORAGE_KEY = "bibenglow_bookings_v2";
-
-function getBookings(): Booking[] {
+export function fetchAllBookings() {
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    const data = localStorage.getItem(STORAGE_KEY);
+    if (!data) return [];
+    return JSON.parse(data);
   } catch { return []; }
 }
-function saveBookings(bookings: Booking[]) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings));
-}
 
-export function fetchAllBookings(): Booking[] {
-  return getBookings();
-}
-
-export function createBooking(booking: BookingInsert): Booking {
-  const bookings = getBookings();
-  const newBooking: Booking = {
-    ...booking,
-    id: Date.now().toString(36) + Math.random().toString(36).substr(2, 5),
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
-  };
+export function createBooking(booking: any) {
+  const bookings = fetchAllBookings();
+  const id = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+  const newBooking = { id, ...booking, status: booking.status || 'pending', created_at: new Date().toISOString() };
   bookings.push(newBooking);
-  saveBookings(bookings);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings));
+  console.log('✅ СОХРАНЕНО В КЛЮЧ:', STORAGE_KEY, newBooking);
   return newBooking;
 }
 
-export function updateBookingStatus(id: string, status: BookingStatus): void {
-  const bookings = getBookings();
-  const index = bookings.findIndex(b => b.id === id);
-  if (index !== -1) {
-    bookings[index].status = status;
-    bookings[index].updated_at = new Date().toISOString();
-    saveBookings(bookings);
+export function updateBookingStatus(id: string, status: string) {
+  const bookings = fetchAllBookings();
+  const booking = bookings.find((b: any) => b.id === id);
+  if (booking) {
+    booking.status = status;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings));
   }
 }
 
-export function deleteBooking(id: string): void {
-  const bookings = getBookings().filter(b => b.id !== id);
-  saveBookings(bookings);
+export function deleteBooking(id: string) {
+  const bookings = fetchAllBookings();
+  const updated = bookings.filter((b: any) => b.id !== id);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+}
+
+export function checkSlotAvailability(date: string, start_time: string, end_time: string) {
+  const all = fetchAllBookings();
+  return all.filter(
+    (b: any) =>
+      b.booking_date === date &&
+      ((b.start_time < end_time && b.end_time > start_time))
+  );
 }
