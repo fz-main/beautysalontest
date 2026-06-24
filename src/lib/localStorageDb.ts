@@ -1,5 +1,5 @@
-// УНИКАЛЬНЫЙ КЛЮЧ ТОЛЬКО ДЛЯ ЭТОГО САЙТА
-const STORAGE_KEY = 'bibenglow_bookings_unique';
+// УНИКАЛЬНЫЙ КЛЮЧ ДЛЯ НОВОГО САЙТА
+const STORAGE_KEY = 'beautysalontest_bookings';
 
 export function fetchAllBookings() {
   try {
@@ -15,7 +15,7 @@ export function createBooking(booking: any) {
   const newBooking = { id, ...booking, status: booking.status || 'pending', created_at: new Date().toISOString() };
   bookings.push(newBooking);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings));
-  console.log('📌 СОХРАНЕНО В КЛЮЧ:', STORAGE_KEY);
+  console.log('🔑 СОХРАНЕНО В КЛЮЧ:', STORAGE_KEY);
   return newBooking;
 }
 
